@@ -10,7 +10,12 @@ kicks = []
 for _ in range(num_kicks):
     player = np.random.choice(df_players.index)
     direction = np.random.randint(1, 10)  # Penalty shoot direction from 1 to 9
-    result = 'Goal' if np.random.rand() < df_players.loc[player, 'goal_prob'] else 'Missed'
+    if direction in [1, 3, 7, 9]:
+        modified_prob = min(df_players.loc[player, 'goal_prob'] + 0.15, 1)  # Increase goal prob by 15%, cap at 100%
+    else:
+        modified_prob = df_players.loc[player, 'goal_prob']
+
+    result = 'Goal' if np.random.rand() < modified_prob else 'Missed'
     
     kicks.append({
         'Player Name': df_players.loc[player, 'name'],
@@ -27,4 +32,4 @@ print("\nPenalty Kicks Dataset Preview:")
 print(df_kicks.head())
 
 # Save both datasets to CSV files if needed
-# df_kicks.to_csv('penalty_kicks_dataset.csv', index=False)
+df_kicks.to_csv('penalty_kicks_dataset.csv', index=False)
