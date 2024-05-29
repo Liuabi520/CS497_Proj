@@ -4,7 +4,7 @@ import numpy as np
 # Example data
 df_players = pd.read_csv('players.csv')
 # Now generate penalty kicks using these players
-num_kicks = 1000  # Number of penalty kicks to simulate
+num_kicks = 10000  # Number of penalty kicks to simulate
 kicks = []
 
 for _ in range(num_kicks):
