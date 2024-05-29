@@ -27,4 +27,4 @@ print("\nPenalty Kicks Dataset Preview:")
 print(df_kicks.head())
 
 # Save both datasets to CSV files if needed
-df_kicks.to_csv('penalty_kicks_dataset.csv', index=False)
+# df_kicks.to_csv('penalty_kicks_dataset.csv', index=False)
