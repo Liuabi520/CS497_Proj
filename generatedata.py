@@ -2,36 +2,29 @@ import pandas as pd
 import numpy as np
 
 # Example data
-players = [
-    {'name': 'Lionel Messi', 'main_foot': 'Left', 'goal_prob': 0.85},
-    {'name': 'Cristiano Ronaldo', 'main_foot': 'Right', 'goal_prob': 0.80},
-    {'name': 'Neymar Jr', 'main_foot': 'Right', 'goal_prob': 0.78},
-    {'name': 'Kylian Mbappe', 'main_foot': 'Right', 'goal_prob': 0.76},
-    # Add more players as needed
-]
+df_players = pd.read_csv('players.csv')
+# Now generate penalty kicks using these players
+num_kicks = 1000  # Number of penalty kicks to simulate
+kicks = []
 
-num_entries = 1000  # Total number of penalty kicks in the dataset
+for _ in range(num_kicks):
+    player = np.random.choice(df_players.index)
+    direction = np.random.randint(1, 10)  # Penalty shoot direction from 1 to 9
+    result = 'Goal' if np.random.rand() < df_players.loc[player, 'goal_prob'] else 'Missed'
+    
+    kicks.append({
+        'Player Name': df_players.loc[player, 'name'],
+        'Main Foot': df_players.loc[player, 'main_foot'],
+        'Penalty Shoot Direction': direction,
+        'Result of Penalty Shoots': result
+    })
 
-# Prepare the lists to populate the dataframe
-names = []
-main_feet = []
-directions = []
-results = []
+# Create DataFrame for penalty kicks
+df_kicks = pd.DataFrame(kicks)
 
-for _ in range(num_entries):
-    player = np.random.choice(players, p=[player['goal_prob'] / sum(p['goal_prob'] for p in players) for player in players])
-    names.append(player['name'])
-    main_feet.append(player['main_foot'])
-    directions.append(np.random.randint(1, 10))
-    results.append('Goal' if np.random.rand() < player['goal_prob'] else 'Missed')
+# Display the first few entries to check
+print("\nPenalty Kicks Dataset Preview:")
+print(df_kicks.head())
 
-# Create DataFrame
-df = pd.DataFrame({
-    'Player Name': names,
-    'Main Foot': main_feet,
-    'Penalty Shoot Direction': directions,
-    'Result of Penalty Shoots': results
-})
-
-# Save to CSV file
-df.to_csv('penalty_kicks_dataset.csv', index=False)
+# Save both datasets to CSV files if needed
+df_kicks.to_csv('penalty_kicks_dataset.csv', index=False)
