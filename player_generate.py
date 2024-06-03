@@ -21,4 +21,4 @@ df_players = pd.DataFrame(players)
 print(df_players.head())
 
 # Save to a CSV file if needed
-df_players.to_csv('fictitious_soccer_players.csv', index=False)
+# df_players.to_csv('fictitious_soccer_players.csv', index=False)
